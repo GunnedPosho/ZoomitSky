@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "zoomit-sky",
+	"version": "${version}",
+	"name": "Zoomit Sky",
+	"description": "Zoom + Cinematographic Zoom",
+	"authors": [
+		"DevSkyK?D"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/zoomit-sky/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.zoomitsky.ZoomitSky"
+		],
+		"client": [
+			"dev.zoomitsky.ZoomitSkyClient"
+		],
+		"fabric-datagen": [
+			"dev.zoomitsky.ZoomitSkyDataGenerator"
+		]
+	},
+	"mixins": [
+		"zoomit-sky.mixins.json",
+		{
+			"config": "zoomit-sky.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.5",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
