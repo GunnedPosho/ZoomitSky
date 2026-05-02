@@ -3,5 +3,14 @@
   "key.zoomitsky.cinematic_zoom": "Cinematic Zoom",
   "key.zoomitsky.reset_zoom": "Reset Zoom",
   "key.zoomitsky.toggle_mode": "Change pressure mode",
-  "category.zoomitsky": "ZoomitSky"
+  "category.zoomitsky": "ZoomitSky",
+
+  "config.zoomitsky.title": "ZoomitSky Config",
+  "config.zoomitsky.category.zoom": "Zoom",
+  "config.zoomitsky.defaultZoom": "Default Zoom",
+  "config.zoomitsky.minZoom": "Max Zoom",
+  "config.zoomitsky.maxZoom": "Min Zoom",
+  "config.zoomitsky.zoomStep": "Zoom Step",
+  "config.zoomitsky.transitionSpeed": "Transition Speed",
+  "config.zoomitsky.cinematicBarsSpeed": "Cinematic Bars Speed"
 }

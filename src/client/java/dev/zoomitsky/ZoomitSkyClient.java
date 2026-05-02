@@ -17,6 +17,7 @@ public class ZoomitSkyClient implements ClientModInitializer {
     private static boolean isCinematicZooming = false;
     private static boolean toggleMode = false;
     private static float targetFov = 1.0f;
+    private static float previousFov = 1.0f;
     private static float currentFov = 1.0f;
 
     // Variables para evitar múltiples activaciones
@@ -26,17 +27,9 @@ public class ZoomitSkyClient implements ClientModInitializer {
 
     // Zoom Cinematográfico
     private static float cinematicBarsProgress = 0.0f;
-    private static final float CINEMATIC_BARS_SPEED = 0.10f;
 
     // Nivel de zoom dinámico
-    private static float zoomLevel = 0.28f;
-    private static final float DEFAULT_ZOOM = 0.28f;
-
-    // Límites del zoom
-    private static final float MIN_ZOOM = 0.05f;
-    private static final float MAX_ZOOM = 0.8f;
-    private static final float ZOOM_STEP = 0.08f;
-    private static final float TRANSITION_SPEED = 0.22f;
+    private static float zoomLevel = ZoomitSkyConfig.get().defaultZoom;
 
     @Override
     public void onInitializeClient() {
@@ -86,11 +79,8 @@ public class ZoomitSkyClient implements ClientModInitializer {
 
                 if (wasZoomingBefore) {
                     isZooming = !wasCinematicBefore;
-                    isCinematicZooming = wasCinematicBefore;
                     targetFov = zoomLevel;
                 } else {
-                    isZooming = false;
-                    isCinematicZooming = false;
                     targetFov = 1.0f;
                 }
 
@@ -106,7 +96,7 @@ public class ZoomitSkyClient implements ClientModInitializer {
             }
 
             if (resetZoomKey.wasPressed()) {
-                zoomLevel = DEFAULT_ZOOM;
+                zoomLevel = Math.max(ZoomitSkyConfig.get().minZoom, Math.min(ZoomitSkyConfig.get().maxZoom, ZoomitSkyConfig.get().defaultZoom));
                 if (isZooming || isCinematicZooming) {
                     targetFov = zoomLevel;
                 }
@@ -143,23 +133,13 @@ public class ZoomitSkyClient implements ClientModInitializer {
                 wasZoomPressed = false;
                 wasCinematicPressed = false;
 
-                if (cPressed && zPressed) {
-                    if (!isCinematicZooming) {
-                        isCinematicZooming = true;
-                        isZooming = false;
-                    }
-                    targetFov = zoomLevel;
-                } else if (cPressed) {
+                if (cPressed) {
                     isCinematicZooming = true;
                     isZooming = false;
                     targetFov = zoomLevel;
                 } else if (zPressed) {
-                    if (!isCinematicZooming) {
-                        isZooming = true;
-                    } else {
-                        isCinematicZooming = false;
-                        isZooming = true;
-                    }
+                    isCinematicZooming = false;
+                    isZooming = true;
                     targetFov = zoomLevel;
                 } else {
                     isZooming = false;
@@ -168,38 +148,40 @@ public class ZoomitSkyClient implements ClientModInitializer {
                 }
             }
 
-            if (currentFov != targetFov) {
-                float difference = targetFov - currentFov;
-                if (Math.abs(difference) < 0.001f) {
-                    currentFov = targetFov;
-                } else {
-                    currentFov += difference * TRANSITION_SPEED;
-                }
+            previousFov = currentFov;
+            float difference = targetFov - currentFov;
+            if (Math.abs(difference) < 0.001f) {
+                currentFov = targetFov;
+            } else {
+                currentFov += difference * ZoomitSkyConfig.get().transitionSpeed;
             }
 
             float targetBars = isCinematicZooming ? 1.0f : 0.0f;
             if (cinematicBarsProgress != targetBars) {
-                float difference = targetBars - cinematicBarsProgress;
-                if (Math.abs(difference) < 0.001f) {
+                float barsDifference = targetBars - cinematicBarsProgress;
+                if (Math.abs(barsDifference) < 0.001f) {
                     cinematicBarsProgress = targetBars;
                 } else {
-                    cinematicBarsProgress += difference * CINEMATIC_BARS_SPEED;
+                    cinematicBarsProgress += barsDifference * ZoomitSkyConfig.get().cinematicBarsSpeed;
                 }
             }
         });
 
+        ZoomitSkyConfig.load();
         ZoomitSky.LOGGER.info("ZoomitSky Client initialized!");
     }
 
     public static void adjustZoom(double scrollAmount) {
         if (isZooming || isCinematicZooming) {
-            zoomLevel -= (float) scrollAmount * ZOOM_STEP;
-            zoomLevel = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomLevel));
+            zoomLevel -= (float) scrollAmount * ZoomitSkyConfig.get().zoomStep;
+            zoomLevel = Math.max(ZoomitSkyConfig.get().minZoom, Math.min(ZoomitSkyConfig.get().maxZoom, zoomLevel));
             targetFov = zoomLevel;
         }
     }
 
-    public static float getFovMultiplier() { return currentFov; }
+    public static float getFovMultiplier(float tickDelta) {
+        return previousFov + (currentFov - previousFov) * tickDelta;
+    }
     public static boolean isZooming() { return isZooming || isCinematicZooming; }
     public static boolean isCinematicZooming() { return isCinematicZooming; }
     public static float getCinematicBarsProgress() { return cinematicBarsProgress; }

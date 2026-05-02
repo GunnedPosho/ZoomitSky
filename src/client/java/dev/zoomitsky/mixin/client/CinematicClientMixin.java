@@ -35,7 +35,7 @@ public class CinematicClientMixin {
             at = @At("TAIL")
     )
     private void renderCinematicBars(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if (!ZoomitSkyClient.isCinematicZooming()) {
+        if (!ZoomitSkyClient.isCinematicZooming() && ZoomitSkyClient.getCinematicBarsProgress() > 0.001f) {
             renderCinematicBarsDirectly(context);
         }
     }
