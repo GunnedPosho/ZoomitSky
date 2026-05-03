@@ -8,7 +8,7 @@
   "config.zoomitsky.title": "Configuración de ZoomitSky",
   "config.zoomitsky.category.zoom": "Zoom",
   "config.zoomitsky.defaultZoom": "Zoom Predeterminado",
-  "config.zoomitsky.minZoom": "Zoom Máximo",
+  "config.zoomitsky.minZoom": "Zoom Máximo(Un valor más bajo aumenta el zoom )",
   "config.zoomitsky.maxZoom": "Zoom Mínimo",
   "config.zoomitsky.zoomStep": "Fluidez del Zoom",
   "config.zoomitsky.transitionSpeed": "Velocidad de Transición",

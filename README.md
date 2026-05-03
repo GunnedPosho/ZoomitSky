@@ -44,7 +44,7 @@ All keys are fully configurable from the in-game keyboard settings.
 
 ## Installation
 
-1. Install [Fabric Loader](https://fabricmc.net/use/installer/) for Minecraft 1.21.1
+1. Install [Fabric Loader](https://fabricmc.net/use/installer/) for Minecraft 1.21.x
 2. Download and install the dependencies listed above
 3. Place the ZoomitSky `.jar` in your `mods/` folder
 
