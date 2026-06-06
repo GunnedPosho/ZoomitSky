@@ -4,6 +4,8 @@
   "key.zoomitsky.reset_zoom": "Restablecer Zoom",
   "key.zoomitsky.toggle_mode": "Cambiar modo de presión",
   "category.zoomitsky": "ZoomitSky",
+  "key.zoomitsky.mode.hold": "Mantener",
+  "key.zoomitsky.mode.toggle": "Alternar",
 
   "config.zoomitsky.title": "Configuración de ZoomitSky",
   "config.zoomitsky.category.zoom": "Zoom",

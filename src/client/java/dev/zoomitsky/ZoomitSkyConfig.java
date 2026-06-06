@@ -19,7 +19,7 @@ public class ZoomitSkyConfig {
 
     public float defaultZoom = 0.28f;
     public float minZoom = 0.05f;
-    public float maxZoom = 0.8f;
+    public float maxZoom = 0.6f;
     public float zoomStep = 0.08f;
     public float transitionSpeed = 0.24f;
     public float cinematicBarsSpeed = 0.10f;
@@ -34,7 +34,8 @@ public class ZoomitSkyConfig {
             return;
         }
         try (Reader reader = Files.newBufferedReader(CONFIG_PATH)) {
-            INSTANCE = GSON.fromJson(reader, ZoomitSkyConfig.class);
+            ZoomitSkyConfig loaded = GSON.fromJson(reader, ZoomitSkyConfig.class);
+            if (loaded != null) INSTANCE = loaded;
         } catch (IOException e) {
             ZoomitSky.LOGGER.error("Failed to load ZoomitSky config", e);
         }

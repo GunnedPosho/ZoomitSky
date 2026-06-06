@@ -6,12 +6,14 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
+import net.minecraft.util.Identifier;
 
 public class ZoomitSkyClient implements ClientModInitializer {
     private static KeyBinding zoomKey;
     private static KeyBinding resetZoomKey;
     private static KeyBinding cinematicZoomKey;
     private static KeyBinding toggleModeKey;
+    private static final KeyBinding.Category CATEGORY = KeyBinding.Category.create(Identifier.of("zoomitsky", "category"));
 
     private static boolean isZooming = false;
     private static boolean isCinematicZooming = false;
@@ -29,7 +31,7 @@ public class ZoomitSkyClient implements ClientModInitializer {
     private static float cinematicBarsProgress = 0.0f;
 
     // Nivel de zoom dinámico
-    private static float zoomLevel = ZoomitSkyConfig.get().defaultZoom;
+    private static float zoomLevel;
 
     @Override
     public void onInitializeClient() {
@@ -38,14 +40,14 @@ public class ZoomitSkyClient implements ClientModInitializer {
                 "key.zoomitsky.zoom",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_Z,
-                "category.zoomitsky"
+                CATEGORY
         ));
         // Zoom cinemático
         cinematicZoomKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.zoomitsky.cinematic_zoom",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_C,
-                "category.zoomitsky"
+                CATEGORY
         ));
 
         // Cambiar modo
@@ -53,7 +55,7 @@ public class ZoomitSkyClient implements ClientModInitializer {
                 "key.zoomitsky.toggle_mode",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_V,
-                "category.zoomitsky"
+                CATEGORY
         ));
 
         // Resetear zoom
@@ -61,7 +63,7 @@ public class ZoomitSkyClient implements ClientModInitializer {
                 "key.zoomitsky.reset_zoom",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_UNKNOWN,
-                "category.zoomitsky"
+                CATEGORY
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -84,9 +86,9 @@ public class ZoomitSkyClient implements ClientModInitializer {
                     targetFov = 1.0f;
                 }
 
-                String mode = toggleMode ? "Press once" : "Press and hold";
+                String modeKey = toggleMode ? "key.zoomitsky.mode.toggle" : "key.zoomitsky.mode.hold";
                 client.player.sendMessage(
-                        net.minecraft.text.Text.literal("§6[ZoomitSky] §e" + mode),
+                        net.minecraft.text.Text.translatable(modeKey),
                         true
                 );
 
@@ -168,7 +170,7 @@ public class ZoomitSkyClient implements ClientModInitializer {
         });
 
         ZoomitSkyConfig.load();
-        ZoomitSky.LOGGER.info("ZoomitSky Client initialized!");
+        zoomLevel = ZoomitSkyConfig.get().defaultZoom;
     }
 
     public static void adjustZoom(double scrollAmount) {

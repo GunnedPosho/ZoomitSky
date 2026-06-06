@@ -11,6 +11,5 @@ public class ZoomitSky implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("ZoomitSky initialized!");
 	}
 }

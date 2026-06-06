@@ -23,9 +23,6 @@
 		],
 		"client": [
 			"dev.zoomitsky.ZoomitSkyClient"
-		],
-		"fabric-datagen": [
-			"dev.zoomitsky.ZoomitSkyDataGenerator"
 		]
 	},
 	"mixins": [
@@ -37,10 +34,12 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.18.3",
-		"minecraft": "~1.21",
+		"minecraft": "~1.21.11",
 		"java": ">=21",
 		"fabric-api": "*",
-		"modmenu": ">=11.0.1",
 		"cloth-config": ">=15.0.130"
+	},
+	"suggests": {
+		"modmenu": "*"
 	}
 }

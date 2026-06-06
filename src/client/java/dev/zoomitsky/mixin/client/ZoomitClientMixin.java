@@ -16,8 +16,8 @@ public class ZoomitClientMixin {
 			at = @At("RETURN"),
 			cancellable = true
 	)
-	private void modifyFov(Camera camera, float tickDelta, boolean changingFov, CallbackInfoReturnable<Double> cir) {
-		double fov = cir.getReturnValue();
+	private void modifyFov(Camera camera, float tickDelta, boolean changingFov, CallbackInfoReturnable<Float> cir) {
+		float fov = cir.getReturnValue();
 		cir.setReturnValue(fov * ZoomitSkyClient.getFovMultiplier(tickDelta));
 	}
 }

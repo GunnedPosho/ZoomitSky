@@ -3,7 +3,6 @@
 	"package": "dev.zoomitsky.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"ZoomitMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
