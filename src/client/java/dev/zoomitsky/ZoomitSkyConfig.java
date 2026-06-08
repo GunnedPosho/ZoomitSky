@@ -23,6 +23,8 @@ public class ZoomitSkyConfig {
     public float zoomStep = 0.08f;
     public float transitionSpeed = 0.24f;
     public float cinematicBarsSpeed = 0.10f;
+    public float transitionDuration = 0.32f;
+    public ZoomEasing.EasingType easingType = ZoomEasing.EasingType.EASE_ZOOMITSKY;
 
     public static ZoomitSkyConfig get() {
         return INSTANCE;

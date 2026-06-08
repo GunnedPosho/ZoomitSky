@@ -7,6 +7,9 @@ import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.minecraft.text.Text;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ZoomitSkyModMenu implements ModMenuApi {
 
     @Override
@@ -20,8 +23,10 @@ public class ZoomitSkyModMenu implements ModMenuApi {
                     .setSavingRunnable(ZoomitSkyConfig::save);
 
             ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-            ConfigCategory category = builder.getOrCreateCategory(Text.translatable("config.zoomitsky.category.zoom"));
+            ConfigCategory category = builder.getOrCreateCategory(
+                    Text.translatable("config.zoomitsky.category.zoom"));
 
+            // --- Zoom values ---
             category.addEntry(entryBuilder
                     .startFloatField(Text.translatable("config.zoomitsky.defaultZoom"), config.defaultZoom)
                     .setDefaultValue(0.28f)
@@ -50,13 +55,31 @@ public class ZoomitSkyModMenu implements ModMenuApi {
                     .setSaveConsumer(val -> config.zoomStep = val)
                     .build());
 
+            // --- Transition ---
             category.addEntry(entryBuilder
-                    .startFloatField(Text.translatable("config.zoomitsky.transitionSpeed"), config.transitionSpeed)
-                    .setDefaultValue(0.24f)
-                    .setMin(0.01f).setMax(2.0f)
-                    .setSaveConsumer(val -> config.transitionSpeed = val)
+                    .startIntSlider(
+                            Text.translatable("config.zoomitsky.transitionDuration"),
+                            Math.round(config.transitionDuration * 100),
+                            0, 200)
+                    .setDefaultValue(18)
+                    .setTextGetter(val -> Text.literal(String.format("%.2fs", val / 100f)))
+                    .setSaveConsumer(val -> config.transitionDuration = val / 100f)
                     .build());
 
+            // Dropdown de easing
+            List<ZoomEasing.EasingType> easingOptions = Arrays.asList(ZoomEasing.EasingType.values());
+            category.addEntry(entryBuilder
+                    .startSelector(
+                            Text.translatable("config.zoomitsky.easingType"),
+                            easingOptions.toArray(),
+                            config.easingType)
+                    .setDefaultValue(ZoomEasing.EasingType.EASE_OUT)
+                    .setNameProvider(val ->
+                            Text.translatable(((ZoomEasing.EasingType) val).getTranslationKey()))
+                    .setSaveConsumer(val -> config.easingType = (ZoomEasing.EasingType) val)
+                    .build());
+
+            // --- Cinematic ---
             category.addEntry(entryBuilder
                     .startFloatField(Text.translatable("config.zoomitsky.cinematicBarsSpeed"), config.cinematicBarsSpeed)
                     .setDefaultValue(0.10f)

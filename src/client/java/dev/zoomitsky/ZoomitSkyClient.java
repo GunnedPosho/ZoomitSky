@@ -21,6 +21,8 @@ public class ZoomitSkyClient implements ClientModInitializer {
     private static float targetFov = 1.0f;
     private static float previousFov = 1.0f;
     private static float currentFov = 1.0f;
+    private static long lastRenderNanos = -1L;
+    private static final ZoomEasing fovEasing = new ZoomEasing();
 
     // Variables para evitar múltiples activaciones
     private static boolean wasZoomPressed = false;
@@ -150,13 +152,9 @@ public class ZoomitSkyClient implements ClientModInitializer {
                 }
             }
 
+            // El tick sigue actualizando targetFov, pero ya no interpola currentFov.
+            // La interpolación real ocurre en getFovMultiplier() con tiempo real.
             previousFov = currentFov;
-            float difference = targetFov - currentFov;
-            if (Math.abs(difference) < 0.001f) {
-                currentFov = targetFov;
-            } else {
-                currentFov += difference * ZoomitSkyConfig.get().transitionSpeed;
-            }
 
             float targetBars = isCinematicZooming ? 1.0f : 0.0f;
             if (cinematicBarsProgress != targetBars) {
@@ -182,7 +180,22 @@ public class ZoomitSkyClient implements ClientModInitializer {
     }
 
     public static float getFovMultiplier(float tickDelta) {
-        return previousFov + (currentFov - previousFov) * tickDelta;
+        long now = System.nanoTime();
+        float deltaSeconds;
+
+        if (lastRenderNanos < 0L) {
+            deltaSeconds = 0f;
+        } else {
+            deltaSeconds = (now - lastRenderNanos) / 1_000_000_000f;
+            deltaSeconds = Math.min(deltaSeconds, 0.1f);
+        }
+        lastRenderNanos = now;
+
+        ZoomitSkyConfig cfg = ZoomitSkyConfig.get();
+        fovEasing.setTarget(targetFov);
+        currentFov = fovEasing.step(deltaSeconds, cfg.transitionDuration, cfg.easingType);
+
+        return currentFov;
     }
     public static boolean isZooming() { return isZooming || isCinematicZooming; }
     public static boolean isCinematicZooming() { return isCinematicZooming; }

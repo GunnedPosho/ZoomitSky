@@ -14,5 +14,17 @@
   "config.zoomitsky.maxZoom": "Min Zoom",
   "config.zoomitsky.zoomStep": "Zoom Step",
   "config.zoomitsky.transitionSpeed": "Transition Speed",
-  "config.zoomitsky.cinematicBarsSpeed": "Cinematic Bars Speed"
+  "config.zoomitsky.cinematicBarsSpeed": "Cinematic Bars Speed",
+
+  "config.zoomitsky.transitionDuration": "Transition Duration",
+  "config.zoomitsky.easingType": "Easing Curve",
+  "config.zoomitsky.easing.ease_zoomitsky": "Ease ZoomitSky",
+  "config.zoomitsky.easing.ease_out_cubic": "Ease Out (Cubic)",
+  "config.zoomitsky.easing.linear": "Linear",
+  "config.zoomitsky.easing.ease_out": "Ease Out",
+  "config.zoomitsky.easing.ease_in": "Ease In",
+  "config.zoomitsky.easing.ease_in_out": "Ease In-Out",
+  "config.zoomitsky.easing.ease_out_sine": "Ease Out (Sine)",
+  "config.zoomitsky.easing.ease_in_sine": "Ease In (Sine)",
+  "config.zoomitsky.easing.ease_out_expo": "Ease Out (Expo)"
 }
