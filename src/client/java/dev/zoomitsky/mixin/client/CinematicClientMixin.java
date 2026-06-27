@@ -1,6 +1,6 @@
 package dev.zoomitsky.mixin.client;
 
-import dev.zoomitsky.ZoomitSkyClient;
+import dev.zoomitsky.ZoomState;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
@@ -12,39 +12,29 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public class CinematicClientMixin {
 
-    @Inject(
-            method = "render",
-            at = @At("HEAD"),
-            cancellable = true
-    )
+    @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void hideGuiDuringCinematic(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if (ZoomitSkyClient.isCinematicZooming()) {
-            renderCinematicBarsDirectly(context);
+        if (ZoomState.isCinematic) {
+            renderBars(context);
             ci.cancel();
         }
     }
 
-    @Inject(
-            method = "render",
-            at = @At("TAIL")
-    )
+    @Inject(method = "render", at = @At("TAIL"))
     private void renderCinematicBars(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        if (!ZoomitSkyClient.isCinematicZooming() && ZoomitSkyClient.getCinematicBarsProgress() > 0.001f) {
-            renderCinematicBarsDirectly(context);
+        if (!ZoomState.isCinematic && ZoomState.cinematicBarsProgress > 0.001f) {
+            renderBars(context);
         }
     }
 
     @org.spongepowered.asm.mixin.Unique
-    private void renderCinematicBarsDirectly(DrawContext context) {
-        float progress = ZoomitSkyClient.getCinematicBarsProgress();
-
-        if (progress > 0.001f) {
-            int screenWidth = context.getScaledWindowWidth();
-            int screenHeight = context.getScaledWindowHeight();
-
-            int barHeight = (int) (screenHeight * 0.12f * progress);
-            context.fill(0, 0, screenWidth, barHeight, 0xFF000000);
-            context.fill(0, screenHeight - barHeight, screenWidth, screenHeight, 0xFF000000);
-        }
+    private void renderBars(DrawContext context) {
+        float progress = ZoomState.cinematicBarsProgress;
+        if (progress <= 0.001f) return;
+        int w = context.getScaledWindowWidth();
+        int h = context.getScaledWindowHeight();
+        int barH = (int) (h * 0.12f * progress);
+        context.fill(0, 0, w, barH, 0xFF000000);
+        context.fill(0, h - barH, w, h, 0xFF000000);
     }
 }

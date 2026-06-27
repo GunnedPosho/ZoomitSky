@@ -22,7 +22,7 @@
 			"dev.zoomitsky.ZoomitSky"
 		],
 		"client": [
-			"dev.zoomitsky.ZoomitSkyClient"
+			"dev.zoomitsky.ClientSetup"
 		]
 	},
 	"mixins": [

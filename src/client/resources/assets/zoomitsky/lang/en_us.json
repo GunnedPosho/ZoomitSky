@@ -1,30 +1,71 @@
 {
+  "_comment": "Keys",
+  "key.category.zoomitsky.category": "ZoomitSky",
   "key.zoomitsky.zoom": "Zoom",
   "key.zoomitsky.cinematic_zoom": "Cinematic Zoom",
-  "key.zoomitsky.reset_zoom": "Reset Zoom",
-  "key.zoomitsky.toggle_mode": "Change pressure mode",
-  "category.zoomitsky": "ZoomitSky",
-  "key.zoomitsky.mode.hold": "Hold",
-  "key.zoomitsky.mode.toggle": "Toggle",
+  "key.zoomitsky.toggle_mode": "Toggle Press Mode",
+  "key.zoomitsky.reset_zoom": "Reset Zoom Distance",
 
-  "config.zoomitsky.title": "ZoomitSky Config",
-  "config.zoomitsky.category.zoom": "Zoom",
+  "_comment2": "Mode messages",
+  "key.zoomitsky.mode.toggle": "Zoom Mode: Toggle",
+  "key.zoomitsky.mode.hold": "Zoom Mode: Hold",
+
+  "_comment3": "Config screen — General",
+  "config.zoomitsky.category.general": "General",
+  "config.zoomitsky.title": "ZoomitSky Configuration",
+  "config.zoomitsky.category.zoom": "First Person",
+  "config.zoomitsky.category.thirdperson": "Third Person Camera",
+  "config.zoomitsky.category.keybinds": "Key Bindings",
+
+  "_comment4": "First Person",
   "config.zoomitsky.defaultZoom": "Default Zoom",
-  "config.zoomitsky.minZoom": "Max Zoom(A lower value increases the zoom)",
-  "config.zoomitsky.maxZoom": "Min Zoom",
+  "config.zoomitsky.defaultZoom.tooltip": "Initial zoom level. This is the value used by the Reset Zoom Distance key.",
+
+  "config.zoomitsky.minZoom": "Far Zoom",
+  "config.zoomitsky.minZoom.tooltip": "Changes the far limit of the zoom. Lower values = more zoom.",
+
+  "config.zoomitsky.maxZoom": "Near Zoom",
+  "config.zoomitsky.maxZoom.tooltip": "Changes the minimum distance where zoom starts. A value of 1 makes the zoom imperceptible when too close.",
+
   "config.zoomitsky.zoomStep": "Zoom Step",
-  "config.zoomitsky.transitionSpeed": "Transition Speed",
-  "config.zoomitsky.cinematicBarsSpeed": "Cinematic Bars Speed",
+  "config.zoomitsky.zoomStep.tooltip": "How much the zoom level changes per mouse wheel tick.",
 
   "config.zoomitsky.transitionDuration": "Transition Duration",
-  "config.zoomitsky.easingType": "Easing Curve",
+  "config.zoomitsky.transitionDuration.tooltip": "How long the zoom animation takes.",
+
+  "config.zoomitsky.easingType": "Animation Curve",
+  "config.zoomitsky.easingType.tooltip": "The easing curve used in the zoom transition. Controls how it accelerates and decelerates.",
+
+  "config.zoomitsky.cinematicBarsSpeed": "Cinematic Bars Speed",
+  "config.zoomitsky.cinematicBarsSpeed.tooltip": "How fast the black bars appear and disappear when using Cinematic Zoom.",
+
+  "_comment5": "Animation curves",
   "config.zoomitsky.easing.ease_zoomitsky": "Ease ZoomitSky",
-  "config.zoomitsky.easing.ease_out_cubic": "Ease Out (Cubic)",
+  "config.zoomitsky.easing.ease_out_cubic": "Ease Out Cubic",
   "config.zoomitsky.easing.linear": "Linear",
   "config.zoomitsky.easing.ease_out": "Ease Out",
   "config.zoomitsky.easing.ease_in": "Ease In",
-  "config.zoomitsky.easing.ease_in_out": "Ease In-Out",
-  "config.zoomitsky.easing.ease_out_sine": "Ease Out (Sine)",
-  "config.zoomitsky.easing.ease_in_sine": "Ease In (Sine)",
-  "config.zoomitsky.easing.ease_out_expo": "Ease Out (Expo)"
+  "config.zoomitsky.easing.ease_in_out": "Ease In Out",
+  "config.zoomitsky.easing.ease_out_sine": "Ease Out Sine",
+  "config.zoomitsky.easing.ease_in_sine": "Ease In Sine",
+  "config.zoomitsky.easing.ease_out_expo": "Ease Out Expo",
+
+  "_comment6": "Third Person",
+  "config.zoomitsky.tp.defaultDistance": "Default Distance",
+  "config.zoomitsky.tp.defaultDistance.tooltip": "Camera distance when activating third person zoom. Press the reset key to return to this value.",
+
+  "config.zoomitsky.tp.minDistance": "Minimum Distance",
+  "config.zoomitsky.tp.minDistance.tooltip": "The closest the camera can be to the player using the mouse wheel.",
+
+    "config.zoomitsky.tp.maxDistance": "Maximum Distance",
+  "config.zoomitsky.tp.maxDistance.tooltip": "The farthest the camera can be from the player using the mouse wheel.",
+
+  "config.zoomitsky.tp.distanceStep": "Distance Step",
+  "config.zoomitsky.tp.distanceStep.tooltip": "How much the camera distance changes per mouse wheel tick in third person.",
+
+  "config.zoomitsky.tp.transitionDuration": "Transition Duration",
+  "config.zoomitsky.tp.transitionDuration.tooltip": "How long the camera distance animation takes. Set to 0.00s for instant movement.",
+
+  "config.zoomitsky.tp.easingType": "Animation Curve",
+  "config.zoomitsky.tp.easingType.tooltip": "The easing curve used in the third person distance transition."
 }

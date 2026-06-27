@@ -40,8 +40,6 @@ public class ZoomEasing {
         return currentValue;
     }
 
-    public float getCurrent() { return currentValue; }
-
     // ------------------------------------------------------------------
 
     public static float applyEasing(float t, EasingType type) {

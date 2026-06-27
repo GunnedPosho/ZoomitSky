@@ -6,7 +6,8 @@
 		"ZoomitClientMixin",
 		"ScrollClientMixin",
 		"CinematicClientMixin",
-		"MouseSensitivityMixin"
+		"MouseSensitivityMixin",
+		"CameraDistanceMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
