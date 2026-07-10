@@ -19,7 +19,7 @@
 			"dev.zoomitsky.ZoomitSkyModMenu"
 		],
 		"main": [
-			"dev.zoomitsky.ZoomitSky"
+          "dev.zoomitsky.ZoomitSkyMain"
 		],
 		"client": [
 			"dev.zoomitsky.ClientSetup"

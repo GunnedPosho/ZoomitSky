@@ -19,10 +19,9 @@ public class ModConfig {
     // Zoom de primera persona
     public float defaultZoom      = 0.28f;
     public float minZoom          = 0.05f;
-    public float maxZoom          = 0.6f;
+    public float maxZoom          = 0.8f;
     public float zoomStep         = 0.08f;
-    public float transitionDuration  = 0.32f;
-    public float cinematicBarsSpeed  = 0.10f;
+    public float transitionDuration  = 0.48f;
     public ZoomEasing.EasingType easingType = ZoomEasing.EasingType.EASE_ZOOMITSKY;
 
     // Cámara en tercera persona
@@ -33,6 +32,22 @@ public class ModConfig {
     public float tpTransitionDuration = 0.32f;
     public ZoomEasing.EasingType tpEasingType = ZoomEasing.EasingType.EASE_ZOOMITSKY;
 
+    // Barras cinemáticas
+    public boolean cinematicBarsUseSameConfig = true;
+    public int cinematicBarsAnimationFps = 60;
+
+    public boolean cinematicTopBarHidden             = false;
+    public float   cinematicTopBarHeight             = 0.12f;
+    public float   cinematicTopBarTransitionDuration = 0.48f;
+    public ZoomEasing.EasingType cinematicTopBarEasingType = ZoomEasing.EasingType.EASE_ZOOMITSKY;
+    public int     cinematicTopBarColor              = 0x000000;
+
+    public boolean cinematicBottomBarHidden             = false;
+    public float   cinematicBottomBarHeight             = 0.12f;
+    public float   cinematicBottomBarTransitionDuration = 0.48f;
+    public ZoomEasing.EasingType cinematicBottomBarEasingType = ZoomEasing.EasingType.EASE_ZOOMITSKY;
+    public int     cinematicBottomBarColor              = 0x000000;
+
     public static ModConfig get() { return INSTANCE; }
 
     public static void load() {
@@ -41,7 +56,7 @@ public class ModConfig {
             ModConfig loaded = GSON.fromJson(reader, ModConfig.class);
             if (loaded != null) INSTANCE = loaded;
         } catch (IOException e) {
-            ZoomitSky.LOGGER.error("Failed to load config", e);
+            ZoomitSkyMain.LOGGER.error("Failed to load config", e);
         }
     }
 
@@ -49,7 +64,7 @@ public class ModConfig {
         try (Writer writer = Files.newBufferedWriter(CONFIG_PATH)) {
             GSON.toJson(INSTANCE, writer);
         } catch (IOException e) {
-            ZoomitSky.LOGGER.error("Failed to save config", e);
+            ZoomitSkyMain.LOGGER.error("Failed to save config", e);
         }
     }
 }

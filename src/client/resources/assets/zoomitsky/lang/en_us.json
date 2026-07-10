@@ -67,5 +67,27 @@
   "config.zoomitsky.tp.transitionDuration.tooltip": "How long the camera distance animation takes. Set to 0.00s for instant movement.",
 
   "config.zoomitsky.tp.easingType": "Animation Curve",
-  "config.zoomitsky.tp.easingType.tooltip": "The easing curve used in the third person distance transition."
+  "config.zoomitsky.tp.easingType.tooltip": "The easing curve used in the third person distance transition.",
+
+  "_comment7": "Cinematic Bars",
+  "config.zoomitsky.category.cinematicBars": "Cinematic Bars",
+  "config.zoomitsky.cinematicBars.useSameConfig": "Use Same Config For Both Bars",
+  "config.zoomitsky.cinematicBars.useSameConfig.tooltip": "When enabled, the bottom bar uses the same color, height, speed and easing as the top bar.",
+  "config.zoomitsky.cinematicBars.hideTop": "Hide Top Bar",
+  "config.zoomitsky.cinematicBars.hideTop.tooltip": "Prevents the top cinematic bar from rendering.",
+  "config.zoomitsky.cinematicBars.hideBottom": "Hide Bottom Bar",
+  "config.zoomitsky.cinematicBars.hideBottom.tooltip": "Prevents the bottom cinematic bar from rendering.",
+  "config.zoomitsky.cinematicBars.top": "Top Bar",
+  "config.zoomitsky.cinematicBars.bottom": "Bottom Bar",
+  "config.zoomitsky.cinematicBars.color": "Bar Color",
+  "config.zoomitsky.cinematicBars.color.tooltip": "Color of the bar, including transparency.",
+  "config.zoomitsky.cinematicBars.height": "Bar Height",
+  "config.zoomitsky.cinematicBars.height.tooltip": "How much of the screen the bar covers, as a fraction of the total height.",
+  "config.zoomitsky.cinematicBars.transitionDuration": "Transition Speed",
+  "config.zoomitsky.cinematicBars.transitionDuration.tooltip": "How long the bar takes to fully appear or disappear.",
+  "config.zoomitsky.cinematicBars.easingType": "Animation Curve",
+  "config.zoomitsky.cinematicBars.easingType.tooltip": "The easing curve used to animate the bar's appearance.",
+
+  "config.zoomitsky.cinematicBars.animationFps": "Animation Smoothness",
+  "config.zoomitsky.cinematicBars.animationFps.tooltip": "How many times per second the bar animation updates. Higher values look smoother."
 }

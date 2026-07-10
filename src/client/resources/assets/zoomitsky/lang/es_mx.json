@@ -36,18 +36,18 @@
   "config.zoomitsky.easingType": "Curva de Animación",
   "config.zoomitsky.easingType.tooltip": "La curva de animación usada en la transición de zoom. Controla cómo acelera y desacelera.",
 
-  "config.zoomitsky.cinematicBarsSpeed": "Velocidad de Barras Cinemáticas",
+  "config.zoomitsky.cinematicBarsSpeed": "Velocidad de Barras cinematográficas",
   "config.zoomitsky.cinematicBarsSpeed.tooltip": "Qué tan rápido aparecen y desaparecen las barras negras al usar el Zoom Cinematográfico.",
 
   "_comment5": "Curvas de animación",
   "config.zoomitsky.easing.ease_zoomitsky": "Ease ZoomitSky",
-  "config.zoomitsky.easing.ease_out_cubic": "Ease Out Cúbico",
-  "config.zoomitsky.easing.linear": "Lineal",
+  "config.zoomitsky.easing.ease_out_cubic": "Ease Out Cubic",
+  "config.zoomitsky.easing.linear": "Linear",
   "config.zoomitsky.easing.ease_out": "Ease Out",
   "config.zoomitsky.easing.ease_in": "Ease In",
   "config.zoomitsky.easing.ease_in_out": "Ease In Out",
-  "config.zoomitsky.easing.ease_out_sine": "Ease Out Seno",
-  "config.zoomitsky.easing.ease_in_sine": "Ease In Seno",
+  "config.zoomitsky.easing.ease_out_sine": "Ease Out Sine",
+  "config.zoomitsky.easing.ease_in_sine": "Ease In Sine",
   "config.zoomitsky.easing.ease_out_expo": "Ease Out Expo",
 
   "_comment6": "Tercera Persona",
@@ -67,5 +67,27 @@
   "config.zoomitsky.tp.transitionDuration.tooltip": "Cuánto tarda la animación de distancia de cámara. Establece 0.00s para movimiento instantáneo.",
 
   "config.zoomitsky.tp.easingType": "Curva de Animación",
-  "config.zoomitsky.tp.easingType.tooltip": "La curva de animación usada en la transición de distancia en tercera persona."
+  "config.zoomitsky.tp.easingType.tooltip": "La curva de animación usada en la transición de distancia en tercera persona.",
+
+  "_comment7": "Barras cinematográficas",
+  "config.zoomitsky.category.cinematicBars": "Barras cinematográficas",
+  "config.zoomitsky.cinematicBars.useSameConfig": "Usar Misma Configuración Para Ambas Barras",
+  "config.zoomitsky.cinematicBars.useSameConfig.tooltip": "Si está activado, la barra inferior usa el mismo color, altura, velocidad y animación que la barra superior.",
+  "config.zoomitsky.cinematicBars.hideTop": "Ocultar Barra Superior",
+  "config.zoomitsky.cinematicBars.hideTop.tooltip": "Evita que la barra cinematográficas superior se muestre.",
+  "config.zoomitsky.cinematicBars.hideBottom": "Ocultar Barra Inferior",
+  "config.zoomitsky.cinematicBars.hideBottom.tooltip": "Evita que la barra cinematográficas inferior se muestre.",
+  "config.zoomitsky.cinematicBars.top": "Barra Superior",
+  "config.zoomitsky.cinematicBars.bottom": "Barra Inferior",
+  "config.zoomitsky.cinematicBars.color": "Color de la Barra",
+  "config.zoomitsky.cinematicBars.color.tooltip": "Color de la barra.",
+  "config.zoomitsky.cinematicBars.height": "Altura de la Barra",
+  "config.zoomitsky.cinematicBars.height.tooltip": "Qué tanto de la pantalla cubre la barra, como fracción del alto total.",
+  "config.zoomitsky.cinematicBars.transitionDuration": "Velocidad de Transición",
+  "config.zoomitsky.cinematicBars.transitionDuration.tooltip": "Cuánto tarda la barra en aparecer o desaparecer por completo.",
+  "config.zoomitsky.cinematicBars.easingType": "Curva de Animación",
+  "config.zoomitsky.cinematicBars.easingType.tooltip": "La curva de animación usada para animar la aparición de la barra.",
+
+  "config.zoomitsky.cinematicBars.animationFps": "Fluidez de Animación",
+  "config.zoomitsky.cinematicBars.animationFps.tooltip": "Cuántas veces por segundo se actualiza la animación de la barra. Valores más altos se ven más fluidos."
 }

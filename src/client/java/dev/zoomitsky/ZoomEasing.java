@@ -2,15 +2,11 @@ package dev.zoomitsky;
 
 public class ZoomEasing {
 
-    // Estado de la transición activa
     private float startValue   = 1.0f;
     private float targetValue  = 1.0f;
     private float currentValue = 1.0f;
-    private float elapsed      = 0f;   // segundos transcurridos desde que inició la transición
+    private float elapsed      = 0f;
 
-    /**
-     * Notifica que el target cambió — reinicia la transición desde el valor actual.
-     */
     public void setTarget(float target) {
         if (target != targetValue) {
             startValue  = currentValue;
@@ -19,13 +15,6 @@ public class ZoomEasing {
         }
     }
 
-    /**
-     * Avanza la transición un frame y devuelve el valor actual.
-     *
-     * @param deltaSeconds Tiempo transcurrido desde el último frame
-     * @param duration     Duración total de la transición en segundos (0 = instantáneo)
-     * @param easingType   Curva a aplicar
-     */
     public float step(float deltaSeconds, float duration, EasingType easingType) {
         if (duration <= 0f || startValue == targetValue) {
             currentValue = targetValue;
@@ -33,7 +22,7 @@ public class ZoomEasing {
         }
 
         elapsed += deltaSeconds;
-        float t = Math.min(elapsed / duration, 1f);  // progreso normalizado [0, 1]
+        float t = Math.min(elapsed / duration, 1f);
         float eased = applyEasing(t, easingType);
 
         currentValue = startValue + (targetValue - startValue) * eased;

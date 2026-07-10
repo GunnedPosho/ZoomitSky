@@ -3,16 +3,14 @@ package dev.zoomitsky;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.text.Text;
 
-/**
- * Procesa las teclas cada tick y actualiza ZoomState.
- * Es el único lugar donde ZoomState se escribe.
- */
 public class ZoomController {
 
-    // Guards para evitar activaciones múltiples en toggle
     private static boolean wasZoomPressed      = false;
     private static boolean wasCinematicPressed = false;
     private static boolean wasTogglePressed    = false;
+
+    private static final ZoomEasing topBarEasing    = new ZoomEasing();
+    private static final ZoomEasing bottomBarEasing = new ZoomEasing();
 
     public static void registerTick() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -23,11 +21,10 @@ public class ZoomController {
             handleToggleModeKey(client, isTP);
             handleResetKeys(isTP);
             handleZoomKeys(isTP);
-            updateCinematicBars();
         });
     }
 
-    // ── Tecla toggle de modo ─────────────────────────
+    // ── Modo de presión ─────────────────────────
 
     private static void handleToggleModeKey(net.minecraft.client.MinecraftClient client, boolean isTP) {
         boolean pressed = ModKeys.toggleMode.isPressed();
@@ -53,7 +50,7 @@ public class ZoomController {
         }
     }
 
-    // ── Teclas de reset ──────────────────────────────
+    // ── Reset ──────────────────────────────
 
     private static void handleResetKeys(boolean isTP) {
         if (ModKeys.resetZoom.wasPressed()) {
@@ -76,7 +73,6 @@ public class ZoomController {
         boolean cPressed = ModKeys.cinematicZoom.isPressed();
 
         if (ZoomState.toggleMode) {
-            // Modo toggle: cada press cambia el estado
             if (cPressed && !wasCinematicPressed) {
                 ZoomState.isCinematic = !ZoomState.isCinematic;
                 if (ZoomState.isCinematic) {
@@ -105,7 +101,6 @@ public class ZoomController {
             }
 
         } else {
-            // Modo hold: activo solo mientras se mantiene presionada
             wasZoomPressed = false;
             wasCinematicPressed = false;
 
@@ -131,20 +126,36 @@ public class ZoomController {
     }
 
     // ── Barras cinemáticas ───────────────────────────
+    private static long  lastBarUpdateNanos    = System.nanoTime();
+    private static float barUpdateAccumulator  = 0f;
 
-    private static void updateCinematicBars() {
+    public static void updateCinematicBars() {
+        long now = System.nanoTime();
+        float delta = (now - lastBarUpdateNanos) / 1_000_000_000f;
+        lastBarUpdateNanos = now;
+
+        ModConfig cfg = ModConfig.get();
         float target = ZoomState.isCinematic ? 1.0f : 0.0f;
-        float diff   = target - ZoomState.cinematicBarsProgress;
-        if (Math.abs(diff) < 0.001f) {
-            ZoomState.cinematicBarsProgress = target;
-        } else {
-            ZoomState.cinematicBarsProgress += diff * ModConfig.get().cinematicBarsSpeed;
+        topBarEasing.setTarget(target);
+        bottomBarEasing.setTarget(target);
+
+        float step = 1f / cfg.cinematicBarsAnimationFps;
+        barUpdateAccumulator += delta;
+
+        while (barUpdateAccumulator >= step) {
+            boolean useSame = cfg.cinematicBarsUseSameConfig;
+            ZoomState.topBarProgress = topBarEasing.step(
+                    step, cfg.cinematicTopBarTransitionDuration, cfg.cinematicTopBarEasingType);
+            ZoomState.bottomBarProgress = bottomBarEasing.step(
+                    step,
+                    useSame ? cfg.cinematicTopBarTransitionDuration : cfg.cinematicBottomBarTransitionDuration,
+                    useSame ? cfg.cinematicTopBarEasingType : cfg.cinematicBottomBarEasingType);
+            barUpdateAccumulator -= step;
         }
     }
 
     // ── Scroll ───────────────────────────────────────
 
-    /** Llamado desde ScrollClientMixin. */
     public static void onScroll(double amount) {
         if (!ZoomState.isAnyZoomActive()) return;
 
@@ -166,11 +177,11 @@ public class ZoomController {
 
     private static void applyZoomTarget(boolean isTP) {
         if (!isTP) ZoomState.targetFov = ZoomState.zoomLevel;
-        else ZoomState.tpTargetDistance = ZoomState.tpZoomLevel; // ← ver ZoomState abajo
+        else ZoomState.tpTargetDistance = ZoomState.tpZoomLevel;
     }
 
     private static void clearZoomTarget(boolean isTP) {
         if (!isTP) ZoomState.targetFov = 1.0f;
-        else ZoomState.tpTargetDistance = ZoomState.tpVanillaDistance;  // ← antes era tpDefaultDistance
+        else ZoomState.tpTargetDistance = ZoomState.tpVanillaDistance;
     }
 }

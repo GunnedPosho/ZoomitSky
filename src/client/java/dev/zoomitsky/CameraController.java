@@ -50,7 +50,7 @@ public class CameraController {
 
     public static double getMouseSensitivityMultiplier() {
         if (!ZoomState.isFirstPersonZooming()) return 1.0;
-        double factor = Math.pow(ZoomState.currentFov, 0.6);
+        double factor = Math.pow(Math.max(0.0, ZoomState.currentFov), 0.6);
         return Math.max(0.15, Math.min(1.0, factor));
     }
 }

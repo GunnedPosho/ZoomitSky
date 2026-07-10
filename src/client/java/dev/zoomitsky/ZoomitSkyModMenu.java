@@ -11,6 +11,9 @@ import net.minecraft.text.Text;
 import java.util.Arrays;
 import java.util.List;
 
+import me.shedaniel.clothconfig2.api.Requirement;
+import me.shedaniel.clothconfig2.gui.entries.BooleanListEntry;
+
 public class ZoomitSkyModMenu implements ModMenuApi {
 
     @Override
@@ -43,16 +46,6 @@ public class ZoomitSkyModMenu implements ModMenuApi {
                     Text.translatable("key.zoomitsky.reset_zoom"), ModKeys.resetZoom).build());
 
             general.addEntry(keybinds.build());
-
-            // Cinematic Bars Speed
-            general.addEntry(e.startFloatField(
-                            Text.translatable("config.zoomitsky.cinematicBarsSpeed"),
-                            config.cinematicBarsSpeed)
-                    .setDefaultValue(0.10f)
-                    .setMin(0.01f).setMax(1.0f)
-                    .setTooltip(Text.translatable("config.zoomitsky.cinematicBarsSpeed.tooltip"))
-                    .setSaveConsumer(val -> config.cinematicBarsSpeed = val)
-                    .build());
 
             // ─── Primera Persona ──────────────────────────────────────────────────
             ConfigCategory fp = builder.getOrCreateCategory(
@@ -168,6 +161,105 @@ public class ZoomitSkyModMenu implements ModMenuApi {
                             Text.translatable(((ZoomEasing.EasingType) val).getTranslationKey()))
                     .setTooltip(Text.translatable("config.zoomitsky.tp.easingType.tooltip"))
                     .setSaveConsumer(val -> config.tpEasingType = (ZoomEasing.EasingType) val)
+                    .build());
+
+            // ─── Barras Cinemáticas ─────────────────────────────────────────────────
+            ConfigCategory bars = builder.getOrCreateCategory(
+                    Text.translatable("config.zoomitsky.category.cinematicBars"));
+
+            BooleanListEntry useSameConfigEntry = e.startBooleanToggle(
+                            Text.translatable("config.zoomitsky.cinematicBars.useSameConfig"),
+                            config.cinematicBarsUseSameConfig)
+                    .setDefaultValue(true)
+                    .setTooltip(Text.translatable("config.zoomitsky.cinematicBars.useSameConfig.tooltip"))
+                    .setSaveConsumer(val -> config.cinematicBarsUseSameConfig = val)
+                    .build();
+            bars.addEntry(useSameConfigEntry);
+
+            bars.addEntry(e.startBooleanToggle(
+                            Text.translatable("config.zoomitsky.cinematicBars.hideTop"),
+                            config.cinematicTopBarHidden)
+                    .setDefaultValue(false)
+                    .setSaveConsumer(val -> config.cinematicTopBarHidden = val)
+                    .build());
+
+            bars.addEntry(e.startBooleanToggle(
+                            Text.translatable("config.zoomitsky.cinematicBars.hideBottom"),
+                            config.cinematicBottomBarHidden)
+                    .setDefaultValue(false)
+                    .setSaveConsumer(val -> config.cinematicBottomBarHidden = val)
+                    .build());
+
+            List<ZoomEasing.EasingType> barsEasing = Arrays.asList(ZoomEasing.EasingType.values());
+
+            // Barra superior
+            SubCategoryBuilder topBar = e.startSubCategory(Text.translatable("config.zoomitsky.cinematicBars.top"));
+
+            topBar.add(e.startColorField(Text.translatable("config.zoomitsky.cinematicBars.color"), config.cinematicTopBarColor)
+                    .setDefaultValue(0x000000)
+                    .setSaveConsumer(val -> config.cinematicTopBarColor = val)
+                    .build());
+
+            topBar.add(e.startFloatField(Text.translatable("config.zoomitsky.cinematicBars.height"), config.cinematicTopBarHeight)
+                    .setDefaultValue(0.12f).setMin(0f).setMax(1.0f)
+                    .setSaveConsumer(val -> config.cinematicTopBarHeight = val)
+                    .build());
+
+            topBar.add(e.startIntSlider(Text.translatable("config.zoomitsky.cinematicBars.transitionDuration"),
+                            Math.round(config.cinematicTopBarTransitionDuration * 100), 0, 200)
+                    .setDefaultValue(32)
+                    .setTextGetter(val -> Text.literal(String.format("%.2fs", val / 100f)))
+                    .setSaveConsumer(val -> config.cinematicTopBarTransitionDuration = val / 100f)
+                    .build());
+
+            topBar.add(e.startSelector(Text.translatable("config.zoomitsky.cinematicBars.easingType"),
+                            barsEasing.toArray(), config.cinematicTopBarEasingType)
+                    .setDefaultValue(ZoomEasing.EasingType.EASE_ZOOMITSKY)
+                    .setNameProvider(val -> Text.translatable(((ZoomEasing.EasingType) val).getTranslationKey()))
+                    .setSaveConsumer(val -> config.cinematicTopBarEasingType = (ZoomEasing.EasingType) val)
+                    .build());
+
+            bars.addEntry(topBar.build());
+
+            // Barra inferior
+            SubCategoryBuilder bottomBar = e.startSubCategory(Text.translatable("config.zoomitsky.cinematicBars.bottom"));
+
+            bottomBar.add(e.startColorField(Text.translatable("config.zoomitsky.cinematicBars.color"), config.cinematicBottomBarColor)
+                    .setDefaultValue(0x000000)
+                    .setSaveConsumer(val -> config.cinematicBottomBarColor = val)
+                    .build());
+
+            bottomBar.add(e.startFloatField(Text.translatable("config.zoomitsky.cinematicBars.height"), config.cinematicBottomBarHeight)
+                    .setDefaultValue(0.12f).setMin(0f).setMax(1.0f)
+                    .setSaveConsumer(val -> config.cinematicBottomBarHeight = val)
+                    .build());
+
+            bottomBar.add(e.startIntSlider(Text.translatable("config.zoomitsky.cinematicBars.transitionDuration"),
+                            Math.round(config.cinematicBottomBarTransitionDuration * 100), 0, 200)
+                    .setDefaultValue(32)
+                    .setTextGetter(val -> Text.literal(String.format("%.2fs", val / 100f)))
+                    .setSaveConsumer(val -> config.cinematicBottomBarTransitionDuration = val / 100f)
+                    .build());
+
+            bottomBar.add(e.startSelector(Text.translatable("config.zoomitsky.cinematicBars.easingType"),
+                            barsEasing.toArray(), config.cinematicBottomBarEasingType)
+                    .setDefaultValue(ZoomEasing.EasingType.EASE_ZOOMITSKY)
+                    .setNameProvider(val -> Text.translatable(((ZoomEasing.EasingType) val).getTranslationKey()))
+                    .setSaveConsumer(val -> config.cinematicBottomBarEasingType = (ZoomEasing.EasingType) val)
+                    .build());
+
+            bottomBar.setDisplayRequirement(Requirement.isFalse(useSameConfigEntry));
+            bars.addEntry(bottomBar.build());
+
+            // Selector de fluidez
+            List<Integer> fpsOptions = Arrays.asList(24, 30, 60, 120);
+            bars.addEntry(e.startSelector(
+                            Text.translatable("config.zoomitsky.cinematicBars.animationFps"),
+                            fpsOptions.toArray(), config.cinematicBarsAnimationFps)
+                    .setDefaultValue(60)
+                    .setNameProvider(val -> Text.literal(val + " FPS"))
+                    .setTooltip(Text.translatable("config.zoomitsky.cinematicBars.animationFps.tooltip"))
+                    .setSaveConsumer(val -> config.cinematicBarsAnimationFps = (Integer) val)
                     .build());
 
             return builder.build();
