@@ -1,6 +1,7 @@
 {
   "_comment": "Keys",
   "key.category.zoomitsky.category": "ZoomitSky",
+  "key.categories.zoomitsky": "ZoomitSky",
   "key.zoomitsky.zoom": "Zoom",
   "key.zoomitsky.cinematic_zoom": "Cinematic Zoom",
   "key.zoomitsky.toggle_mode": "Toggle Press Mode",

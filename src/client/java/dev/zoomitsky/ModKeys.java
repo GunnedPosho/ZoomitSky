@@ -3,13 +3,11 @@ package dev.zoomitsky;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 
 public class ModKeys {
 
-    public static final KeyBinding.Category CATEGORY =
-            KeyBinding.Category.create(Identifier.of("zoomitsky", "category"));
+    public static final String CATEGORY = "key.categories.zoomitsky";
 
     public static KeyBinding zoom;
     public static KeyBinding cinematicZoom;

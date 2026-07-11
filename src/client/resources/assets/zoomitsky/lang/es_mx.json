@@ -1,6 +1,7 @@
 {
   "_comment": "Teclas",
   "key.category.zoomitsky.category": "Configuración ZoomitSky",
+  "key.categories.zoomitsky": "ZoomitSky",
   "key.zoomitsky.zoom": "Zoom",
   "key.zoomitsky.cinematic_zoom": "Zoom Cinematográfico",
   "key.zoomitsky.toggle_mode": "Cambiar Modo de Presión",
