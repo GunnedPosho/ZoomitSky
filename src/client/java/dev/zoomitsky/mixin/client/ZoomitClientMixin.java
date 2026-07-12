@@ -13,7 +13,7 @@ public class ZoomitClientMixin {
 
 	@Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
 	private void modifyFov(Camera camera, float tickDelta, boolean changingFov,
-						   CallbackInfoReturnable<Float> cir) {
+						   CallbackInfoReturnable<Double> cir) {
 		cir.setReturnValue(cir.getReturnValue() * CameraController.getFovMultiplier());
 	}
 }
